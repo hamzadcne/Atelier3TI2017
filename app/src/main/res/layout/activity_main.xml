@@ -10,7 +10,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="a3ti.atelier.mobile.atelier3ti2017.MainActivity">
+    tools:context="a3ti.atelier.mobile.atelier3ti2017.MainActivity"
+    android:weightSum="1">
 
 
     <TextView
@@ -25,9 +26,52 @@
         android:id="@+id/button"
         android:onClick="onLoadClick"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Username"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text=""
+            android:ems="10"
+            android:id="@+id/usernameTxtView"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+        android:text="Password"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_margin="5dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/passwordTxtView"
+            android:layout_weight="1" />
+    </LinearLayout>
     <TextView
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/resultTextView" />
+
 </LinearLayout>
