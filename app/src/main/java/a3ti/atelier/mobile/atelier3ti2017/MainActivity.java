@@ -10,15 +10,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import Models.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
         username=usernameTxt.getText().toString();
         password=passwordTxt.getText().toString();
 
-        String urlString="http://192.168.137.1/test.php";
-        //BackgroundTask task=new BackgroundTask();
-        PostDataTask task = new PostDataTask();
+        String urlString="http://192.168.43.243/gps/users.php";
+        BackgroundTask task=new BackgroundTask();
+        //PostDataTask task = new PostDataTask();
         task.execute(urlString);
 
 
@@ -99,6 +108,32 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
             TextView textView = (TextView) findViewById(R.id.resultTextView);
             textView.setText(s);
+            ArrayList<User> users=new ArrayList<User>();
+            try {
+                Gson gson= new Gson();
+
+                User[] usersList =  gson.fromJson(s, User[].class);
+
+                /*JSONArray array = new JSONArray(s);
+                for (int i=0;i<array.length();i++) {
+                    JSONObject obj=array.getJSONObject(i);
+                    String nom = obj.getString("Nom");
+                    String prenom = obj.getString("Prenom");
+                    Double latitude= obj.getDouble("Latitude");
+                    Double longitude= obj.getDouble("Longitude");
+                    User user=new User();
+                    user.setNom(nom);
+                    user.setPrenom(prenom);
+                    user.setLatitude(latitude);
+                    user.setLongitude(longitude);
+                    users.add(user);
+                }*/
+                Toast.makeText(getBaseContext(),String.valueOf(usersList.length),Toast.LENGTH_LONG);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
     private class PostDataTask extends AsyncTask<String,Void,String>
@@ -111,15 +146,14 @@ public class MainActivity extends AppCompatActivity {
                 url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
 
-                connection.setRequestMethod("GET");
+                connection.setRequestMethod("POST");
                 connection.setConnectTimeout(15000 /* milliseconds */);
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                String s = "username="+username+"&password=" + password;
-
+                String s = "username="+username+ "&password=" + password;
                 connection.setFixedLengthStreamingMode(s.getBytes().length);
-                PrintWriter out = new PrintWriter(connection.getOutputStream());
+                PrintWriter out = new PrintWriter (connection.getOutputStream());
                 out.print(s);
                 out.close();
 
@@ -148,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
                 Logger.getLogger(getClass().getName())
                         .log(Level.SEVERE, null, e);
-                Toast.makeText(getBaseContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                 return "Erreur";
             }
         }
