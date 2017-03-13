@@ -1,7 +1,10 @@
 package a3ti.atelier.mobile.atelier3ti2017;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,10 +26,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import Models.SharedPreferencesManager;
 import Models.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        String token=SharedPreferencesManager.getSharedPreference(getBaseContext(),"Token");
+        if(token.equals(""))
+        {
+
+        }else
+        {
+
+        }
     }
 
     public void onLoadClick(View view) {
@@ -54,9 +69,7 @@ public class MainActivity extends AppCompatActivity {
         //PostDataTask task = new PostDataTask();
         task.execute(urlString);
 
-
     }
-
 
     private class BackgroundTask extends AsyncTask<String,Void,String>
     {
@@ -112,7 +125,9 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Gson gson= new Gson();
 
+
                 User[] usersList =  gson.fromJson(s, User[].class);
+                users = new ArrayList<>(Arrays.asList(usersList));
 
                 /*JSONArray array = new JSONArray(s);
                 for (int i=0;i<array.length();i++) {
@@ -151,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                String token=SharedPreferencesManager
+                        .getSharedPreference(getBaseContext(),"Token");
+                connection.setRequestProperty("Token", token);
                 String s = "username="+username+ "&password=" + password;
                 connection.setFixedLengthStreamingMode(s.getBytes().length);
                 PrintWriter out = new PrintWriter (connection.getOutputStream());
@@ -190,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            SharedPreferencesManager.setSharedPreference(getBaseContext(),"Token",s);
             TextView textView = (TextView) findViewById(R.id.resultTextView);
             textView.setText(s);
         }

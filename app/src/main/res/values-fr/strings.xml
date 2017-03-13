@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Atelier3TI2017</string>
+    <string name="load_txt">Charger</string>
+    <string name="password_txt">Mot de Passe</string>
+    <string name="username_txt">Nom d\'Utilisateur</string>
+</resources>
