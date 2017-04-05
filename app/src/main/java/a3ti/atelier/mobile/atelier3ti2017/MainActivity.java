@@ -1,9 +1,14 @@
 package a3ti.atelier.mobile.atelier3ti2017;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         {
 
         }
+
+
     }
 
     public void onLoadClick(View view) {
