@@ -44,4 +44,9 @@
             android:id="@+id/longitude_value"
             />
     </LinearLayout>
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Share"
+        android:onClick="onShareClick"/>
 </LinearLayout>

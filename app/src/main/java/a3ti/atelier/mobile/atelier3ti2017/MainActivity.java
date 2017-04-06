@@ -2,6 +2,7 @@ package a3ti.atelier.mobile.atelier3ti2017;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -76,6 +77,16 @@ public class MainActivity extends AppCompatActivity {
         //PostDataTask task = new PostDataTask();
         task.execute(urlString);
 
+    }
+
+    public void onMapClick(View view) {
+        Intent mapIntent=new Intent(this,MapsActivity.class);
+        startActivity(mapIntent);
+    }
+
+    public void onLocationClick(View view) {
+        Intent gpsIntent=new Intent(this,GpsActivity.class);
+        startActivity(gpsIntent);
     }
 
     private class BackgroundTask extends AsyncTask<String,Void,String>
