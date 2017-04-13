@@ -17,11 +17,15 @@ public class SharedPreferencesManager {
         return preferences.getString(key, "");
     }
 
-    public static void setSharedPreference(Context mContext, String key,String value)
+    public static void setSharedPreference(Context mContext,
+                                           String key
+            ,String value)
     {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        preferences.edit().putString(key, value);
-        preferences.edit().apply();
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.apply();
     }
 
 }
